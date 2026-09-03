@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Edit Student' if student else 'Add Student' }} — Student Record Manager{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <div class="card form-card">
+    <h1 class="page-title">{{ 'Edit Student' if student else 'Add New Student' }}</h1>
+    <p class="subtitle">{{ 'Update existing student details.' if student else 'Enter details to register a new student.' }}</p>
+
+    <form method="POST" class="form-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id">Student ID *</label>
+          <input 
+            type="text" 
+            id="id" 
+            name="id" 
+            value="{{ student.id if student else (form_data.id if form_data else '') }}" 
+            {{ 'readonly' if student else 'required' }}
+            placeholder="e.g. 1001"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="department">Department *</label>
+          <input 
+            type="text" 
+            id="department" 
+            name="department" 
+            value="{{ student.department if student else (form_data.department if form_data else '') }}" 
+            required 
+            placeholder="e.g. CSE, EEE, BBA"
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Full Name *</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          value="{{ student.name if student else (form_data.name if form_data else '') }}" 
+          required 
+          placeholder="e.g. John Doe"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          value="{{ student.email if student else (form_data.email if form_data else '') }}" 
+          required 
+          placeholder="e.g. john@email.com"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number (Optional)</label>
+        <input 
+          type="tel" 
+          id="phone" 
+          name="phone" 
+          value="{{ student.phone if student else (form_data.phone if form_data else '') }}" 
+          placeholder="e.g. 01700000000"
+        >
+      </div>
+
+      <div class="form-actions">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">
+          {{ 'Save Changes' if student else 'Add Student' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
