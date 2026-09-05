@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="inventory-manager.css">
+</head>
+<body>
+<div class="shell">
+
+    <aside class="sidebar">
+    <div class="brand">STOCK<span>ROOM</span></div>
+    <div class="nav-group-label">Overview</div>
+    <a class="nav-item active"><span class="nav-dot"></span>Dashboard</a>
+    <a class="nav-item"><span class="nav-dot"></span>Products</a>
+    <a class="nav-item"><span class="nav-dot"></span>Stock movements</a>
+    <a class="nav-item"><span class="nav-dot"></span>Low stock</a>
+    <div class="nav-group-label">Manage</div>
+    <a class="nav-item"><span class="nav-dot"></span>Categories</a>
+    <a class="nav-item"><span class="nav-dot"></span>Reports</a>
+    <div class="sidebar-foot">Warehouse 01<br>Synced 2 min ago</div>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div>
+                <h1>Inventory</h1>
+                <p class="subhead">42 products across 6 categories</p>
+            </div>
+            <div class="topbar-actions">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search by name or SKU" oninput="filterTable()">
+                </div>
+                <button class="btn btn-primary" onclick="document.getElementById('addProductForm').scrollIntoView({behavior:'smooth'})">+ Add product</button>
+            </div>
+        </div>
+
+        <div class="stats">
+                <div class="stat">
+                <div class="stat-label">Total products</div>
+                <div class="stat-value">42</div>
+                <div class="stat-sub">Across 6 categories</div>
+                </div>
+            <div class="stat">
+                <div class="stat-label">Low stock</div>
+                <div class="stat-value warn">5</div>
+                <div class="stat-sub">Below reorder level</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Out of stock</div>
+                <div class="stat-value">1</div>
+                <div class="stat-sub">Needs immediate reorder</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Movements today</div>
+                <div class="stat-value">14</div>
+                <div class="stat-sub">9 in · 5 out</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div>
+                <div class="panel">
+                    <div class="panel-head">
+                        <div class="panel-title">Products</div>
+                        <div class="pill-toggle">
+                            <div class="pill active" onclick="setFilter(this,'all')">All</div>
+                            <div class="pill" onclick="setFilter(this,'low')">Low stock</div>
+                        </div>
+                    </div>
+                <table id="productTable">
+                    <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Reorder at</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="sku">INV-0182</td>
+                        <td class="prod-name">Cordless drill 18V</td>
+                        <td class="prod-cat">Power tools</td>
+                        <td class="qty">64</td>
+                        <td class="qty">20</td>
+                        <td><span class="badge ok">In stock</span></td>
+                        <td><div class="row-actions"><a>Adjust</a><a>Edit</a></div></td>
+                    </tr>
+                    <tr class="low-row" data-status="low">
+                        <td class="sku">INV-0245</td>
+                        <td class="prod-name">Safety goggles, clear</td>
+                        <td class="prod-cat">Safety gear</td>
+                        <td class="qty">8</td>
+                        <td class="qty">15</td>
+                        <td><span class="badge low">Low stock</span></td>
+                        <td><div class="row-actions"><a>Adjust</a><a>Edit</a></div></td>
+                    </tr>
+                    <tr>
+                        <td class="sku">INV-0301</td>
+                        <td class="prod-name">Galvanised hinges (pk 10)</td>
+                        <td class="prod-cat">Hardware</td>
+                        <td class="qty">210</td>
+                        <td class="qty">50</td>
+                        <td><span class="badge ok">In stock</span></td>
+                        <td><div class="row-actions"><a>Adjust</a><a>Edit</a></div></td>
+                    </tr>
+                    <tr class="low-row" data-status="low">
+                        <td class="sku">INV-0356</td>
+                        <td class="prod-name">Epoxy resin 1L</td>
+                        <td class="prod-cat">Adhesives</td>
+                        <td class="qty">4</td>
+                        <td class="qty">12</td>
+                        <td><span class="badge low">Low stock</span></td>
+                        <td><div class="row-actions"><a>Adjust</a><a>Edit</a></div></td>
+                    </tr>
+                    <tr>
+                        <td class="sku">INV-0410</td>
+                        <td class="prod-name">Extension cable 10m</td>
+                        <td class="prod-cat">Electrical</td>
+                        <td class="qty">37</td>
+                        <td class="qty">10</td>
+                        <td><span class="badge ok">In stock</span></td>
+                        <td><div class="row-actions"><a>Adjust</a><a>Edit</a></div></td>
+                    </tr>
+                    <tr data-status="out">
+                        <td class="sku">INV-0468</td>
+                        <td class="prod-name">Respirator filter set</td>
+                        <td class="prod-cat">Safety gear</td>
+                        <td class="qty">0</td>
+                        <td class="qty">10</td>
+                        <td><span class="badge out">Out of stock</span></td>
+                        <td><div class="row-actions"><a>Adjust</a><a>Edit</a></div></td>
+                    </tr>
+                    <tr>
+                        <td class="sku">INV-0522</td>
+                        <td class="prod-name">Ratchet strap 5m</td>
+                        <td class="prod-cat">Hardware</td>
+                        <td class="qty">58</td>
+                        <td class="qty">15</td>
+                        <td><span class="badge ok">In stock</span></td>
+                        <td><div class="row-actions"><a>Adjust</a><a>Edit</a></div></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div class="panel lowstock-panel">
+                    <div class="panel-head">
+                        <div class="panel-title">Reorder queue</div>
+                    </div>
+                    <div class="lowstock-item">
+                        <span class="name">Safety goggles, clear</span>
+                        <span class="need">need +7</span>
+                    </div>
+                    <div class="lowstock-item">
+                        <span class="name">Epoxy resin 1L</span>
+                        <span class="need">need +8</span>
+                    </div>
+                    <div class="lowstock-item">
+                        <span class="name">Respirator filter set</span>
+                        <span class="need">need +10</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="panel" id="addProductForm">
+                    <div class="panel-head">
+                        <div class="panel-title">Record stock movement</div>
+                    </div>
+                    <div class="field">
+                        <label>Product</label>
+                        <select>
+                            <option>Cordless drill 18V — INV-0182</option>
+                            <option>Safety goggles, clear — INV-0245</option>
+                            <option>Epoxy resin 1L — INV-0356</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Movement type</label>
+                        <div class="type-toggle">
+                            <label><input type="radio" name="movetype" checked><span>Stock in</span></label>
+                            <label><input type="radio" name="movetype"><span>Stock out</span></label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Quantity</label>
+                        <input type="number" placeholder="0" min="0">
+                    </div>
+                    <div class="field">
+                        <label>Note (optional)</label>
+                        <input type="text" placeholder="e.g. supplier delivery, damaged unit">
+                    </div>
+                    <div class="form-foot">
+                        <button class="btn btn-primary">Save movement</button>
+                    </div>
+                </div>
+
+                <div class="panel" style="margin-top:20px;">
+                    <div class="panel-head">
+                        <div class="panel-title">Add new product</div>
+                    </div>
+                    <div class="field">
+                        <label>Product name</label>
+                        <input type="text" placeholder="e.g. Wire strippers">
+                    </div>
+                    <div class="field">
+                        <label>Category</label>
+                        <select>
+                            <option>Power tools</option>
+                            <option>Hardware</option>
+                            <option>Safety gear</option>
+                            <option>Electrical</option>
+                            <option>Adhesives</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Starting quantity</label>
+                        <input type="number" placeholder="0" min="0">
+                    </div>
+                    <div class="field">
+                        <label>Reorder level</label>
+                        <input type="number" placeholder="e.g. 15" min="0">
+                    </div>
+                    <div class="form-foot">
+                        <button class="btn btn-primary">Add product</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+function filterTable(){
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('#productTable tbody tr').forEach(row=>{
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(q) ? '' : 'none';
+    });
+}
+function setFilter(el, mode){
+    document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('#productTable tbody tr').forEach(row=>{
+        if(mode==='all'){ row.style.display=''; }
+        else { row.style.display = row.dataset.status ? '' : 'none'; }
+    });
+}
+</script>
+</body>
+</html>
