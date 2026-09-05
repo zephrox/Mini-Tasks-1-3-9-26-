@@ -33,5 +33,12 @@
     "department": "BBA",
     "email": "jane.smith@email.com",
     "phone": "01800000000"
+  },
+  "1064": {
+    "id": "1064",
+    "name": "Hasibul islam",
+    "department": "Arch",
+    "email": "hasib@gmail.com",
+    "phone": "016025942351"
   }
 }
