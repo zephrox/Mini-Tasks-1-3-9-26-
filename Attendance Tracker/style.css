@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eeeeee;
+    margin: 0;
+    padding: 30px;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+    background-color: white;
+    padding: 25px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.section {
+    margin-top: 30px;
+    padding-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+form {
+    width: 400px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 8px 15px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th,
+td {
+    border: 1px solid #999999;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #dddddd;
+}
+
+input[type="radio"] {
+    width: auto;
+}
